@@ -1,0 +1,32 @@
+{
+    "name": "playbook_debugger",
+    "title": "Playbook Debugger",
+    "subTitle": "Playbook Debugger",
+    "version": "1.0.0",
+    "metadata": {
+        "description": "",
+        "pages": [],
+        "certified": "No",
+        "publisher": "anonyges@gmail.com",
+        "compatibility": [
+            "7.5.0"
+        ],
+        "standalone": true,
+        "windowClass": "Full Width",
+        "category": [
+            "Utilities"
+        ],
+        "contexts": [
+            "drawer"
+        ],
+        "view": {
+            "popup": "custom",
+            "draggable": true,
+            "activeBackground": true,
+            "enableFor": [
+                "main.playbookDetail"
+            ]
+        }
+    },
+    "development": false
+}

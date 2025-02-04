@@ -1,0 +1,106 @@
+<!-- 
+  author: anonyges@gmail.com
+  modified: 250104
+-->
+<div class="widget widget-container chart">
+  <!-- Search String in Playbook  -->
+  <div ng-form name="form_search_string_in_playbook" class="form-group">
+    <div class="display-flex-space-between" style="align-items: center;">
+      <span>Search in Playbook</span>
+      <div>
+        <span class="fa btn widget-action-icon btn-sm pull-right"
+          data-ng-click="search_string_in_playbook_hide = !search_string_in_playbook_hide"
+          data-ng-class="{'fa-caret-up': !search_string_in_playbook_hide, 'fa-caret-down': search_string_in_playbook_hide}"></span>
+      </div>
+    </div>
+    <div class="form-group" data-ng-hide="search_string_in_playbook_hide">
+      <div class="display-flex-space-between" style="align-items: center;">
+        <span class="col-md-1">search:</span>
+        <div class="col-md-11" data-cs-field="data_cs_search_pattern" data-ng-model="data_cs_search_pattern_model">
+        </div>
+      </div>
+    </div>
+  </div>
+  <hr>
+
+
+  <!-- Export Executed Playbooks  -->
+  <div ng-form name="form_jinja_debug_editor" class="form-group">
+    <div class="display-flex-space-between" style="align-items: center;">
+      <span>Jinja Editor</span>
+      <div>
+        <span class="fa btn widget-action-icon btn-sm pull-right"
+          data-ng-click="jinja_debug_editor_hide = !jinja_debug_editor_hide"
+          data-ng-class="{'fa-caret-up': !jinja_debug_editor_hide, 'fa-caret-down': jinja_debug_editor_hide}"></span>
+      </div>
+    </div>
+    <div class="form-group" data-ng-hide="jinja_debug_editor_hide">
+      <div class="field-editor" data-ng-class="{'editorFullScreen': field.fullscreen}"
+          id="data_cs_jinja_debug_editor" name="data_cs_jinja_debug_editor" data-monaco-editor
+          data-editor-config="data_cs_jinja_debug_editor_settings" data-editor-content="config.data_cs_jinja_debug_editor_content"
+          data-content-change="data_cs_jinja_debug_editor_fileContentChanged(newContent)" data-editor-changed="data_cs_jinja_debug_editor_editorChanged(editor)"
+          data-field="data_cs_jinja_debug_editor_field" data-show-taskbar="true"></div>
+    </div>
+  </div>
+  <hr>
+
+
+  <!-- Export Executed Playbooks  -->
+  <div ng-form name="form_export_executed_playbook" class="form-group">
+    <div class="display-flex-space-between" style="align-items: center;">
+      <span>Export Executed Playbook</span>
+      <div>
+        <span class="fa btn widget-action-icon btn-sm pull-right"
+          data-ng-click="export_executed_playbook_hide = !export_executed_playbook_hide"
+          data-ng-class="{'fa-caret-up': !export_executed_playbook_hide, 'fa-caret-down': export_executed_playbook_hide}"></span>
+      </div>
+    </div>
+    <div class="form-group" data-ng-hide="export_executed_playbook_hide">
+      <div class="display-flex-space-between" style="align-items: center;">
+        <span>TODO option 1:</span>
+        <div>cs_field</div>
+      </div>
+      <button class="btn btn-primary btn-sm pull-right" ng-click="bt_export_executed_playbook()">Export</button>
+    </div>
+  </div>
+  <hr>
+
+
+  <!-- vis-network to show interconnected playbooks -->
+  <div ng-form name="form_playbook_interconnection" class="form-group">
+    <div class="display-flex-space-between" style="align-items: center;">
+      <span>Playbook Interconnection Engine</span>
+      <div>
+        <span class="fa btn widget-action-icon icon icon-refresh btn-sm pull-right"
+          data-ng-click="bt_get_playbook_interconnection()"></span>
+        <span class="fa btn widget-action-icon btn-sm pull-right"
+          data-ng-click="playbook_interconnection_hide = !playbook_interconnection_hide"
+          data-ng-class="{'fa-caret-up': !playbook_interconnection_hide, 'fa-caret-down': playbook_interconnection_hide}"></span>
+      </div>
+    </div>
+    <div class="form-group" data-ng-hide="playbook_interconnection_hide">
+      <div id="{{playbook_interconnection_html_id}}"></div>
+    </div>
+  </div>
+  <hr>
+
+
+  <!-- inject draggable UI -->
+  <div ng-form name="form_inject_draggable_ui" class="form-group">
+    <div class="display-flex-space-between" style="align-items: center;">
+      <span>Inject Draggable UI</span>
+      <div>
+        <span class="fa btn widget-action-icon icon icon-refresh btn-sm pull-right"
+          data-ng-click="bt_get_inject_draggable_ui()"></span>
+        <span class="fa btn widget-action-icon btn-sm pull-right"
+          data-ng-click="inject_draggable_ui_hide = !inject_draggable_ui_hide"
+          data-ng-class="{'fa-caret-up': !inject_draggable_ui_hide, 'fa-caret-down': inject_draggable_ui_hide}"></span>
+      </div>
+    </div>
+    <div class="form-group" data-ng-hide="inject_draggable_ui_hide">
+      <button class="btn btn-primary btn-sm pull-right" ng-click="bt_inject_draggable_ui()">Draggable UI</button>
+    </div>
+  </div>
+  <hr>
+
+</div>

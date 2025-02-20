@@ -1,8 +1,9 @@
 {
-    "name": "playbook_debugger",
+    "name": "playbookDebugger",
     "title": "Playbook Debugger",
     "subTitle": "Playbook Debugger",
     "version": "1.0.0",
+    "published_date": 1720413750,
     "metadata": {
         "description": "",
         "pages": [],

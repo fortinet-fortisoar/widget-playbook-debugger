@@ -1,19 +1,18 @@
-/* 
-  author: anonyges@gmail.com
-  modified: 250103
-*/
+/* Copyright start
+  Copyright (C) 2008 - 2025 Fortinet Inc.
+  All rights reserved.
+  FORTINET CONFIDENTIAL & FORTINET PROPRIETARY SOURCE CODE
+  Copyright end */
+
 'use strict';
 (function () {
     angular
         .module('cybersponse')
-        .controller('editPlaybook_debugger100Ctrl', editPlaybook_debugger100Ctrl);
+        .controller('editPlaybookDebugger100Ctrl', editPlaybookDebugger100Ctrl);
 
-    editPlaybook_debugger100Ctrl.$inject = ['$scope', '$uibModalInstance', 'config', 'widgetUtilityService', '$timeout', "PlaybookDesigner"];
+        editPlaybookDebugger100Ctrl.$inject = ['$scope', 'config'];
 
-    function editPlaybook_debugger100Ctrl($scope, $uibModalInstance, config, widgetUtilityService, $timeout, PlaybookDesigner) {
+    function editPlaybookDebugger100Ctrl($scope, config) {
         $scope.config = config;
-        $scope.$on("endpoint:click", function(event, json_data) {
-            console.debug(json_data);
-        });
     }
 })();

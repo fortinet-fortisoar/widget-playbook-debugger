@@ -9,10 +9,9 @@
     .module('cybersponse')
     .controller('playbookDebugger100Ctrl', playbookDebugger100Ctrl);
 
-    playbookDebugger100Ctrl.$inject = ['$scope', 'API', '$http', '$q', 'playbookDebuggerService', '$timeout', '$rootScope', 'CommonUtils', 'widgetUtilityService'];
+    playbookDebugger100Ctrl.$inject = ['$scope', '$q', 'playbookDebuggerService', '$timeout', '$rootScope', 'CommonUtils', 'widgetUtilityService'];
 
-  function playbookDebugger100Ctrl($scope, API, $http, $q, playbookDebuggerService, $timeout, $rootScope, CommonUtils, widgetUtilityService) {
-    $scope.exportExecutedPlaybook = exportExecutedPlaybook;
+  function playbookDebugger100Ctrl($scope, $q, playbookDebuggerService, $timeout, $rootScope, CommonUtils, widgetUtilityService) {
     $scope.getPlaybookInterConnection = getPlaybookInterConnection;
     $scope.playbookInterconnectionID = 'dpb-' + CommonUtils.generateUUID();
     $scope.canvasConfig = {
@@ -21,29 +20,7 @@
       edge_color: ''
     };
     let playbookConnectionConfig;
-    const workflowCollectionData = {
-      'type': 'workflow_collections',
-      'data': [
-        {
-          '@context': '/api/3/contexts/WorkflowCollection',
-          '@type': 'WorkflowCollection',
-          'name': '00 - Playbook Debugger - Exported Playbooks',
-          'description': null,
-          'visible': true,
-          'image': null,
-          'uuid': '8816ee5f-1aa5-414b-ada8-a01680b947ff',
-          'id': 4474955,
-          'createDate': 0,
-          'modifyDate': 0,
-          'deletedAt': null,
-          'importedBy': [],
-          'recordTags': [],
-          'workflows': []
-        }
-      ],
-      'exported_tags': []
-    };
-
+    
     $scope.$on('popupOpened', function() {
       init();
     })
@@ -77,8 +54,7 @@
       let playbookConfig = {
         playbookDesigner: playbookDesigner,
         playbookDesignerScope: angular.element(playbookDesigner).scope(),
-        pattern: newVal,
-        searchType: 'default'
+        searchValue: newVal
       };
       let highlightedStepUUID = [];
       if(playbookConfig.playbookDesignerScope && playbookConfig.playbookDesignerScope.playbook && playbookConfig.playbookDesignerScope.playbook.steps) {
@@ -89,26 +65,12 @@
           const stepElement = playbookConfig.playbookDesigner.querySelector(`#step-${step_uuid}`);
           _unhighlightStep(stepElement);
           
-          if(playbookConfig.pattern === '')
+          if(playbookConfig.searchValue === '')
             continue;
 
-          if(playbookConfig.searchType === 'default') {
-            if(stepArguments.toLowerCase().indexOf(playbookConfig.pattern.toLowerCase()) >= 0) {
-              _highlightStep(stepElement);
-              highlightedStepUUID.push(step.uuid);
-            }
-          }
-          else if(playbookConfig.searchType === 'case sensitive') {
-            if(stepArguments.indexOf(playbookConfig.pattern) >= 0) {
-              _highlightStep(stepElement);
-              highlightedStepUUID.push(step.uuid);
-            }
-          }
-          else if(playbookConfig.searchType === 'regex') {
-            if(stepArguments.match(playbookConfig.pattern)) {
-              _highlightStep(stepElement);
-              highlightedStepUUID.push(step.uuid);
-            }
+          if(stepArguments.toLowerCase().indexOf(playbookConfig.searchValue.toLowerCase()) >= 0) {
+            _highlightStep(stepElement);
+            highlightedStepUUID.push(step.uuid);
           }
         }
       }
@@ -123,89 +85,6 @@
         }
       }
     });
-
-    function _saveToFile(playbook) {
-      delete playbook['@context'];
-      delete playbook['@id'];
-      for (const step of playbook.steps) {
-        delete step['@id'];
-        step.stepType = step.stepType['@id'];
-      }
-      for (const route of playbook.routes) {
-        delete route['@id'];
-      }
-      delete playbook['priority'];
-      delete playbook['createUser'];
-      delete playbook['modifyUser'];
-
-      let workflow_collection = JSON.parse(JSON.stringify(workflowCollectionData));
-      workflow_collection['data'][0]['workflows'].push(playbook);
-
-      const jsonString = JSON.stringify(workflow_collection);
-      const blob = new Blob([jsonString], { type: 'application/json' });
-      const url = window.URL.createObjectURL(blob);
-      const collection = document.createElement('collection');
-      collection.href = url;
-      collection.download = 'exported_playbook_data.json';
-      collection.click();
-      window.URL.revokeObjectURL(url);
-    }
-
-    function _getStepResultByStepName(steps, stepName) {
-      for (const step of steps)
-        if (step['name'] === stepName)
-          return step;
-    }
-
-    function exportExecutedPlaybook() {
-      const runningPlaybookCtl = document.querySelector('div[data-ng-controller=\'RunningPlaybookCtl\']');
-      const runningPlaybookCtlScope = angular.element(runningPlaybookCtl).scope()
-
-      $http.get(API.API + runningPlaybookCtlScope.activeTab + '?').then(function (response) {
-        if(response && response.data) {
-          let URL = response.data.template_iri;
-
-          $http.get(URL + '?$relationships=true&$versions=false').then(function (playbookResponse) {
-              let playbookData = playbookResponse['data'];
-              let get_executed_steps_promise = [];
-
-              for (const step of playbookData['steps']) {
-                const executed_step = _getStepResultByStepName(response.data.steps, step.name);
-                if (executed_step) {
-                  get_executed_steps_promise.push($http.get(API.API + executed_step['@id']));
-                }
-              }
-
-              $q.all(get_executed_steps_promise).then(function (executed_step_responses) {
-                  for (const index in executed_step_responses) {
-                    const executedStep = executed_step_responses[index]['data'];
-                    const stepTypeName = export_playbook_data['steps'][index]['stepType']['name'];
-                    if (stepTypeName === 'SetVariable') {
-                      // _step['arguments'] = executed_step['args']; // TODO choose from 1, accept jinja or replace everything?
-                      export_playbook_data['steps'][index]['arguments'] = executedStep['result']; // TODO choose from 1, accept jinja or replace everything?
-                    }
-                    else if (stepTypeName === 'cybersponse.abstract_trigger') {
-                      // trigger step
-                    }
-                    else {
-                      export_playbook_data['steps'][index]['arguments']['mock_result'] = executedStep['result'];
-                    }
-                  }
-                  _saveToFile(export_playbook_data);
-                })
-                .catch(function (_error) {
-                  console.debug(_error);
-                })
-            })
-            .catch(function (_response) {
-
-            });
-        }
-      })
-      .catch(function (_response) {
-
-      });
-    }
 
     function get_parent_playbooks(uuid, current_depth = 0, until_depth) {
       var defer = $q.defer();

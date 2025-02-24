@@ -259,19 +259,6 @@
       })
     }
 
-    $scope.$watch('parent_playbook_depth', function (new_value, old_value) {
-      if(!CommonUtils.isUndefined($scope.playbook_uuid)) {
-        get_parent_playbooks($scope.playbook_uuid, 0, new_value);
-      }
-    });
-
-
-    $scope.$watch('child_playbook_depth', function (new_value, old_value) {
-      if(!CommonUtils.isUndefined($scope.playbook_uuid)) {
-        get_child_playbooks($scope.playbook_uuid, 0, new_value);
-      }
-    });
-
     function _handleTranslations() {
       let widgetData = {
         name: $scope.config.name,

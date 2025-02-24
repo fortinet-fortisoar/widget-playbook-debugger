@@ -252,8 +252,8 @@
 
       $scope.processing = true;
       var promises = [];
-      promises.push(get_parent_playbooks($scope.playbook_uuid, 0, 10));
-      promises.push(get_child_playbooks($scope.playbook_uuid, 0, 10));
+      promises.push(get_parent_playbooks($scope.playbook_uuid, 0, 5));
+      promises.push(get_child_playbooks($scope.playbook_uuid, 0, 5));
       $q.all(promises).then(function() {
         $scope.processing = false;
       })

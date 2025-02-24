@@ -9,9 +9,9 @@
     .module('cybersponse')
     .controller('playbookDebugger100Ctrl', playbookDebugger100Ctrl);
 
-    playbookDebugger100Ctrl.$inject = ['$scope', 'API', '$http', '$q', 'playbookDebuggerService', '$timeout', '$rootScope', 'CommonUtils'];
+    playbookDebugger100Ctrl.$inject = ['$scope', 'API', '$http', '$q', 'playbookDebuggerService', '$timeout', '$rootScope', 'CommonUtils', 'widgetUtilityService'];
 
-  function playbookDebugger100Ctrl($scope, API, $http, $q, playbookDebuggerService, $timeout, $rootScope, CommonUtils) {
+  function playbookDebugger100Ctrl($scope, API, $http, $q, playbookDebuggerService, $timeout, $rootScope, CommonUtils, widgetUtilityService) {
     $scope.exportExecutedPlaybook = exportExecutedPlaybook;
     $scope.getPlaybookInterConnection = getPlaybookInterConnection;
     $scope.playbookInterconnectionID = 'dpb-' + CommonUtils.generateUUID();
@@ -54,29 +54,6 @@
 
     function _unhighlightStep(stepElement) {
       stepElement.style.border = '';
-    }
-
-    function _handleTranslations() {
-      let widgetData = {
-        name: $scope.config.name,
-        version: $scope.config.version
-      };
-      let widgetNameVersion = widgetUtilityService.getWidgetNameVersion(widgetData);
-      if (widgetNameVersion) {
-        widgetUtilityService.checkTranslationMode(widgetNameVersion).then(function () {
-          $scope.viewWidgetVars = {
-            // Create your translating static string variables here
-            PLAYBOOK_INTERCONNECTION_ENGINE_TITLE: widgetUtilityService.translate('playbookDebugger.PLAYBOOK_INTERCONNECTION_ENGINE'),
-            SEARCH: widgetUtilityService.translate('playbookDebugger.SEARCH'),
-            SEARCH_IN_PLAYBOOK_TITLE: widgetUtilityService.translate('playbookDebugger.SEARCH_IN_PLAYBOOK')
-          };
-        });
-      }
-      else {
-        $timeout(function () {
-          cancel();
-        }, 100)
-      }
     }
 
     function init() {
@@ -289,7 +266,7 @@
           for (const step of steps) {
             if (step['stepType']['name'] === 'WorkflowReference') {
               const child_playbook_uuid = step['arguments']['workflowReference'].split('/').pop();
-              if (!playbookDebuggerService.isValidUUID(child_playbook_uuid)) {
+              if (!CommonUtils.isUUID(child_playbook_uuid)) {
                 console.debug(`not a valid uuid4: ${child_playbook_uuid} in playbook ${response['data']['name']}`);
                 continue;
               }
@@ -416,6 +393,28 @@
       }
     });
 
+    function _handleTranslations() {
+      let widgetData = {
+        name: $scope.config.name,
+        version: $scope.config.version
+      };
+      let widgetNameVersion = widgetUtilityService.getWidgetNameVersion(widgetData);
+      if (widgetNameVersion) {
+        widgetUtilityService.checkTranslationMode(widgetNameVersion).then(function () {
+          $scope.viewWidgetVars = {
+            // Create your translating static string variables here
+            PLAYBOOK_INTERCONNECTION_ENGINE_TITLE: widgetUtilityService.translate('playbookDebugger.PLAYBOOK_INTERCONNECTION_ENGINE'),
+            SEARCH: widgetUtilityService.translate('playbookDebugger.SEARCH'),
+            SEARCH_IN_PLAYBOOK_TITLE: widgetUtilityService.translate('playbookDebugger.SEARCH_IN_PLAYBOOK')
+          };
+        });
+      }
+      else {
+        $timeout(function () {
+          cancel();
+        }, 100)
+      }
+    }
     init();
   }
 })();

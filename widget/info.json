@@ -8,7 +8,7 @@
         "description": "",
         "pages": [],
         "certified": "No",
-        "publisher": "anonyges@gmail.com",
+        "publisher": "Fortinet",
         "compatibility": [
             "7.5.0"
         ],
@@ -28,6 +28,5 @@
                 "main.playbookDetail"
             ]
         }
-    },
-    "development": false
+    }
 }

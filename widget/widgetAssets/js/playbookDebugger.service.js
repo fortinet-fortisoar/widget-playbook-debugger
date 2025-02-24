@@ -1,7 +1,6 @@
 /* Copyright start
-  Copyright (C) 2008 - 2025 Fortinet Inc.
-  All rights reserved.
-  FORTINET CONFIDENTIAL & FORTINET PROPRIETARY SOURCE CODE
+  MIT License
+  Copyright (c) 2025 Fortinet Inc
   Copyright end */
   'use strict';
 
@@ -16,8 +15,7 @@
         var service = {
           getParentPlaybook: getParentPlaybook,
           getChildPlaybook: getChildPlaybook,
-          isValidUUID: isValidUUID,
-          getMonacoEditorSettings: getMonacoEditorSettings
+          isValidUUID: isValidUUID
         };
         return service;
         
@@ -53,62 +51,6 @@
 
         function isValidUUID(uuid) {
             return uuid.match(/^[0-9a-f]{8}-[0-9a-f]{4}-[1-5][0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$/i);
-        }
-
-        function getMonacoEditorSettings() {
-            return {
-                'editorTheme': {
-                    'dark': 'vs-dark',
-                    'steel': 'vs-dark',
-                    'light': 'vs'
-                },
-                'editorMode': {
-                    'js': {
-                        'language': 'javascript'
-                    },
-                    'html': {
-                        'language': 'html'
-                    },
-                    'json': {
-                        'language': 'json'
-                    },
-                    'css': {
-                        'language': 'css'
-                    },
-                    'python': {
-                        'language': 'python'
-                    },
-                    'py': {
-                        'language': 'python'
-                    },
-                    'text': {
-                        'language': 'plaintext'
-                    },
-                    'image': {
-                        'language': 'html'
-                    },
-                    'markdown': {
-                        'language': 'plaintext'
-                    }
-                },
-                'editorSettings': {
-                    'automaticLayout': true,
-                    'lineNumbers': 'on',
-                    'roundedSelection': false,
-                    'scrollBeyondLastLine': false,
-                    'readOnly': false
-                },
-                'menuImages': {
-                    'folder': 'fa fa-folder',
-                    'html': 'fa fa-html5',
-                    'js': 'fa fa-code',
-                    'json': 'icon icon-json-file',
-                    'image': 'fa fa-picture-o',
-                    'css': 'icon icon-css',
-                    'python': 'icon icon-python',
-                    'text': 'icon icon-txt'
-                }
-            }
         }
   
       }

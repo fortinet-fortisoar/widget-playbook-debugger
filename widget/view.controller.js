@@ -1,7 +1,6 @@
 /* Copyright start
-  Copyright (C) 2008 - 2025 Fortinet Inc.
-  All rights reserved.
-  FORTINET CONFIDENTIAL & FORTINET PROPRIETARY SOURCE CODE
+  MIT License
+  Copyright (c) 2025 Fortinet Inc
   Copyright end */
 
 'use strict';
@@ -10,16 +9,12 @@
     .module('cybersponse')
     .controller('playbookDebugger100Ctrl', playbookDebugger100Ctrl);
 
-    playbookDebugger100Ctrl.$inject = ['$scope', 'API', 'Field', '$http', '$q', 'playbookDebuggerService', '$timeout', '$rootScope', 'CommonUtils'];
+    playbookDebugger100Ctrl.$inject = ['$scope', 'API', '$http', '$q', 'playbookDebuggerService', '$timeout', '$rootScope', 'CommonUtils'];
 
-  function playbookDebugger100Ctrl($scope, API, Field, $http, $q, playbookDebuggerService, $timeout, $rootScope, CommonUtils) {
+  function playbookDebugger100Ctrl($scope, API, $http, $q, playbookDebuggerService, $timeout, $rootScope, CommonUtils) {
     $scope.exportExecutedPlaybook = exportExecutedPlaybook;
     $scope.getPlaybookInterConnection = getPlaybookInterConnection;
-    $scope.injectDraggableUI = injectDraggableUI;
-    $scope.jinjaDebugEditorSettings = playbookDebuggerService.getMonacoEditorSettings()['editorSettings'];
-    $scope.jinjaDebugEditorSettings['language'] = 'jinja';
-    $scope.jinjaDebugEditorSettings['theme'] = 'vs-dark';
-    $scope.playbookInterconnectionID = 'dpb-' + crypto.randomUUID();
+    $scope.playbookInterconnectionID = 'dpb-' + CommonUtils.generateUUID();
     $scope.canvasConfig = {
       node_bg_color: '',
       node_text_color: '',
@@ -72,6 +67,7 @@
           $scope.viewWidgetVars = {
             // Create your translating static string variables here
             PLAYBOOK_INTERCONNECTION_ENGINE_TITLE: widgetUtilityService.translate('playbookDebugger.PLAYBOOK_INTERCONNECTION_ENGINE'),
+            SEARCH: widgetUtilityService.translate('playbookDebugger.SEARCH'),
             SEARCH_IN_PLAYBOOK_TITLE: widgetUtilityService.translate('playbookDebugger.SEARCH_IN_PLAYBOOK')
           };
         });
@@ -419,136 +415,6 @@
         get_child_playbooks($scope.playbook_uuid, 0, new_value);
       }
     });
-
-    function injectDraggableUI() {
-      function _setTransitionQuerySelector(querySelector, value) {
-        const elements = document.querySelectorAll(querySelector);
-        for (const element of elements) {
-          element.style.transition = value;
-        }
-      }
-
-
-      function _setWidthQuerySelector(querySelector, width) {
-        const elements = document.querySelectorAll(querySelector);
-        for (const element of elements) {
-          element.style.width = width;
-        }
-      }
-
-      const STEP_COLLECTIONS_CSS = [
-        '#step-collections .playbook-btn-holder',
-        '#step-collections .playbook-selected-step-container',
-        '#step-collections .transclude-container',
-        '#step-collections .playbook-advance-action',
-        '#step-collections'
-      ]
-      // check css for step-collections
-
-
-      let originalMousePosition = 0;
-      let isResizing = false;
-      let stepCollectionsWidth = 0;
-      let lastStepCollectionsWidth = 0;
-
-      let mutation_observer = new MutationObserver(function (mutations) {
-        mutations.forEach(function (mutation) {
-          if (mutation.attributeName == 'style') {
-            if (!mutation.target.style.width && lastStepCollectionsWidth != 0) {
-              for (const _t of STEP_COLLECTIONS_CSS)
-                _setWidthQuerySelector(_t, lastStepCollectionsWidth + 'px');
-            }
-            if (mutation.offsetWidth > 0) {
-              mutation.target.style.overflow = 'visible';
-            }
-            else {
-              mutation.target.style.overflow = '';
-            }
-          }
-        });
-      });
-      let observerConfig = {
-        attributes: true,
-        attributeFilter: ['style']
-      };
-      if (!document.getElementById('playbook_step_container_ui_draggable_bar')) {
-        const playbook_step_container_ui_draggable_bar = document.createElement('div');
-        playbook_step_container_ui_draggable_bar.id = 'playbook_step_container_ui_draggable_bar';
-        playbook_step_container_ui_draggable_bar.style.right = '-10px';
-        playbook_step_container_ui_draggable_bar.style.height = '100%';
-        playbook_step_container_ui_draggable_bar.style.position = 'absolute';
-        playbook_step_container_ui_draggable_bar.style.bordercolor = 'white';
-        playbook_step_container_ui_draggable_bar.style.width = '10px';
-        playbook_step_container_ui_draggable_bar.style.background = 'gray';
-        const step_collections = document.getElementById('step-collections');
-        step_collections.appendChild(playbook_step_container_ui_draggable_bar);
-
-
-        playbook_step_container_ui_draggable_bar.addEventListener('click', (e) => {
-          e.preventDefault();
-        });
-
-        // Add mousedown event listener to start resizing
-        playbook_step_container_ui_draggable_bar.addEventListener('mousedown', (e) => {
-          e.preventDefault();
-          isResizing = true;
-          originalMousePosition = e.clientX;
-          stepCollectionsWidth = document.querySelector('#step-collections').offsetWidth; //in px
-
-          for (const _t of STEP_COLLECTIONS_CSS)
-            _setTransitionQuerySelector(_t, 'none');
-        });
-
-
-        // Add mouseup event listener to stop resizing
-        document.addEventListener('mouseup', () => {
-          isResizing = false;
-        });
-
-
-        // Add mousemove event listener for resizing
-        document.addEventListener('mousemove', (e) => {
-          if (!isResizing) return;
-          lastStepCollectionsWidth = stepCollectionsWidth + (e.clientX - originalMousePosition);
-
-          // min & max width
-          if (lastStepCollectionsWidth <= 360) lastStepCollectionsWidth = 360;
-          if (lastStepCollectionsWidth >= document.body.offsetWidth / 2) lastStepCollectionsWidth = document.body.offsetWidth / 2;
-
-          // check css for step-collections
-          for (const _t of STEP_COLLECTIONS_CSS)
-            _setWidthQuerySelector(_t, lastStepCollectionsWidth + 'px');
-
-          document.getElementById('designer-container').setAttribute('style', 'margin-left:' + lastStepCollectionsWidth + 'px !important');
-        });
-
-
-        // addEventListener when the user closes the steps...
-        const CLOSE_BTNS = [
-          'close-selected-pb-step-form-btn',
-          'close-selected-pb-step-btn'
-        ]
-        for (const close_btn of CLOSE_BTNS) {
-          const element = document.getElementById(close_btn);
-          if (!element) continue;
-          element.addEventListener('click', (e) => {
-            lastStepCollectionsWidth = 0;
-            for (const close_btn of STEP_COLLECTIONS_CSS) {
-              _setWidthQuerySelector(close_btn, null);
-              _setTransitionQuerySelector(close_btn, null);
-            }
-            step_collections.style.width = null;
-            step_collections.style.overflow = null;
-            step_collections.style.transition = null;
-
-            document.getElementById('designer-container').style.marginLeft = null;
-          });
-        }
-
-        const targetNode = document.getElementById('step-collections');
-        mutation_observer.observe(targetNode, observerConfig);
-      }
-    }
 
     init();
   }

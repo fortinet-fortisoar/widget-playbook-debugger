@@ -1,7 +1,7 @@
-<!-- 
-  author: anonyges@gmail.com
-  modified: 250104
--->
+<!-- Copyright start
+  MIT License
+  Copyright (c) 2025 Fortinet Inc
+  Copyright end -->
 <script src="widgetAssets/js/playbookDebugger.service.js"></script>
 <div>
   <!-- Search String in Playbook  -->
@@ -10,7 +10,7 @@
       <label class="control-label">{{viewWidgetVars.SEARCH_IN_PLAYBOOK}}</label>
     </div>
     <div class="input-group col-md-6 search-style margin-0 padding-0">
-      <input type="text" class="form-control filter-height-style font-style-normal" data-ng-model="searchText" placeholder="{{ 'PLAYBOOKS.DESIGNER.LABEL_SEARCH_ACTION' | translate }}" aria-labelledby="search-btn" name="search-input">
+      <input type="text" class="form-control filter-height-style font-style-normal" data-ng-model="searchText" placeholder="{{viewWidgetVars.SEARCH}}" aria-labelledby="search-btn" name="search-input">
       <span class="input-group-btn">
         <button type="submit" class="btn btn-default filter-height-style" aria-label="Search" id="submit-search-field-playbook-debugger">
           <span class="icon icon-search"></span>

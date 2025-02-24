@@ -1,6 +1,7 @@
 {
     "playbookDebugger": {
         "PLAYBOOK_INTERCONNECTION_ENGINE": "プレイブック相互接続エンジン",
+        "SEARCH": "検索",
         "SEARCH_IN_PLAYBOOK": "プレイブック内を検索"
     }
 }

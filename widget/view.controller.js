@@ -13,7 +13,7 @@
 
   function playbookDebugger100Ctrl($scope, $q, playbookDebuggerService, $timeout, $rootScope, CommonUtils, widgetUtilityService) {
     $scope.getPlaybookInterConnection = getPlaybookInterConnection;
-    $scope.playbookInterconnectionID = 'dpb-' + CommonUtils.generateUUID();
+    $scope.playbookInterconnectionID = 'pb-' + CommonUtils.generateUUID();
     $scope.canvasConfig = {
       node_bg_color: '',
       node_text_color: '',
@@ -212,6 +212,9 @@
         }
       };
       $scope.playbook_interconnection_network = new vis.Network(container, $scope.playbook_interconnection_vis_data, options);
+      setTimeout(() => {
+        $scope.playbook_interconnection_network.fit();
+      }, 500);
       var canvasElement = document.querySelector('.vis-network');
       if($rootScope.theme.id === 'steel') {
         canvasElement.style.backgroundColor = '#323b47';
@@ -234,6 +237,13 @@
       });
       $scope.playbook_interconnection_network.on("stabilizationIterationsDone", function () {
         $scope.playbook_interconnection_network.fit(); // Auto-adjusts view to avoid overlap
+        if($scope.playbook_interconnection_vis_data.nodes._data.length === 1) {
+          $scope.playbook_interconnection_network.setOptions({ physics: { enabled: true } });
+          $scope.playbook_interconnection_network.moveTo({
+            position: { x: 0, y: 0 },
+            scale: 1.5 // Increase scale if needed
+          });
+        }
       });
 
       const designer = document.querySelector('#designer');

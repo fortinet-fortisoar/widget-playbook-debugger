@@ -1,5 +1,8 @@
 {
     "playbookDebugger": {
+        "BTN_CANCEL": "キャンセル",
+        "BTN_SAVE": "保存",
+        "PLAYBOOK_DEBUGGER_EDIT_VIEW": "プレイブックデバッガー編集ビュー",
         "PLAYBOOK_INTERCONNECTION_ENGINE": "プレイブック相互接続エンジン",
         "SEARCH": "検索",
         "SEARCH_IN_PLAYBOOK": "プレイブック内を検索"

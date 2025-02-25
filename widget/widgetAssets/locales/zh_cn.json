@@ -1,5 +1,8 @@
 {
     "playbookDebugger": {
+        "BTN_CANCEL": "取消",
+        "BTN_SAVE": "保存",
+        "PLAYBOOK_DEBUGGER_EDIT_VIEW": "Playbook 调试器编辑视图",
         "PLAYBOOK_INTERCONNECTION_ENGINE": "Playbook 互联引擎",
         "SEARCH": "搜索",
         "SEARCH_IN_PLAYBOOK": "在 Playbook 中搜索"

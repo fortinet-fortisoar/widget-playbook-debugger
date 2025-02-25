@@ -1,0 +1,10 @@
+{
+    "playbookDebugger": {
+        "BTN_CANCEL": "취소",
+        "BTN_SAVE": "저장",
+        "PLAYBOOK_DEBUGGER_EDIT_VIEW": "플레이북 디버거 편집 보기",
+        "PLAYBOOK_INTERCONNECTION_ENGINE": "플레이북 상호 연결 엔진",
+        "SEARCH": "검색",
+        "SEARCH_IN_PLAYBOOK": "플레이북에서 검색"
+    }
+}

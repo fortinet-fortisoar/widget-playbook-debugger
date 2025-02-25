@@ -1,0 +1,32 @@
+{
+    "name": "playbookDebugger",
+    "title": "Playbook Debugger",
+    "subTitle": "Playbook Debugger",
+    "version": "1.0.0",
+    "published_date": 1720413750,
+    "metadata": {
+        "description": "Shows graphical representation of all playbooks that reference or are referenced by the playbook opened in the playbook designer. With the *search* bar you can now search for values contained within the various fields of the opened playbook.",
+        "pages": [],
+        "certified": "No",
+        "publisher": "Fortinet",
+        "compatibility": [
+            "7.5.0"
+        ],
+        "standalone": true,
+        "windowClass": "Full Width",
+        "category": [
+            "Utilities"
+        ],
+        "contexts": [
+            "drawer"
+        ],
+        "view": {
+            "popup": "custom",
+            "draggable": true,
+            "activeBackground": true,
+            "enableFor": [
+                "main.playbookDetail"
+            ]
+        }
+    }
+}

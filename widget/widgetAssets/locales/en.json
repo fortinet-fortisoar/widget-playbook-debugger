@@ -1,0 +1,10 @@
+{
+    "playbookDebugger": {
+        "BTN_CANCEL": "CANCEL",
+        "BTN_SAVE": "Save",
+        "PLAYBOOK_DEBUGGER_EDIT_VIEW": "Playbook Debugger Edit View",
+        "PLAYBOOK_INTERCONNECTION_ENGINE": "Playbook Interconnection Engine",
+        "SEARCH": "Search",
+        "SEARCH_IN_PLAYBOOK": "Search In Playbook"
+    }
+}

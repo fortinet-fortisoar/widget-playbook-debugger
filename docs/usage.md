@@ -24,4 +24,3 @@ The **Search** box enables users to search for text, including variables, step n
 
 | [Installation](./setup.md#installation) | [Configuration](./setup.md#configuration) |
 | --------------------------------------- | ---------------------------------------- |
-|                                         |                                          |

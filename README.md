@@ -23,4 +23,3 @@ FortiSOAR supports nested playbooks, allowing for more complex relationships bet
 
 | [Installation](./docs/setup.md#installation) | [Configuration](./docs/setup.md#configuration) | [Usage](./docs/usage.md) |
 | ---------------------------------------- | ---------------------------------------- | ------------------------ |
-|                                          |                                          |                          |

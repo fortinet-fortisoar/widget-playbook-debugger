@@ -7,11 +7,11 @@
 (function () {
   angular
     .module('cybersponse')
-    .controller('playbookDebugger100Ctrl', playbookDebugger100Ctrl);
+    .controller('playbookUtility100Ctrl', playbookUtility100Ctrl);
 
-    playbookDebugger100Ctrl.$inject = ['$scope', '$q', 'playbookDebuggerService', '$timeout', '$rootScope', 'CommonUtils', 'widgetUtilityService'];
+    playbookUtility100Ctrl.$inject = ['$scope', '$q', 'playbookDebuggerService', '$timeout', '$rootScope', 'CommonUtils', 'widgetUtilityService', '$state', '$window'];
 
-  function playbookDebugger100Ctrl($scope, $q, playbookDebuggerService, $timeout, $rootScope, CommonUtils, widgetUtilityService) {
+  function playbookUtility100Ctrl($scope, $q, playbookDebuggerService, $timeout, $rootScope, CommonUtils, widgetUtilityService, $state, $window) {
     $scope.getPlaybookInterConnection = getPlaybookInterConnection;
     $scope.playbookInterconnectionID = 'pb-' + CommonUtils.generateUUID();
     $scope.canvasConfig = {
@@ -22,7 +22,7 @@
     let playbookConnectionConfig;
     
     $scope.$on('popupOpened', function() {
-      init();
+      _handleTranslations();
     })
 
     function _highlightStep(stepElement) {
@@ -34,7 +34,6 @@
     }
 
     function init() {
-      _handleTranslations();
       $scope.searchText = '';
       playbookConnectionConfig = {
         nodes: new vis.DataSet(),
@@ -233,7 +232,11 @@
         $scope.canvasConfig.edge_color = '#8993A5';
       }
       $scope.playbook_interconnection_network.on('click', function (params) {
-        //Added click event on node
+        if(params && params.nodes.length === 0) {
+          return;
+        }
+        var url = $state.href($state.current.name, {id: params.nodes[0]});
+        $window.open(url,'_blank');
       });
       $scope.playbook_interconnection_network.on("stabilizationIterationsDone", function () {
         $scope.playbook_interconnection_network.fit(); // Auto-adjusts view to avoid overlap
@@ -279,18 +282,24 @@
         widgetUtilityService.checkTranslationMode(widgetNameVersion).then(function () {
           $scope.viewWidgetVars = {
             // Create your translating static string variables here
-            PLAYBOOK_INTERCONNECTION_ENGINE_TITLE: widgetUtilityService.translate('playbookDebugger.PLAYBOOK_INTERCONNECTION_ENGINE'),
+            PLAYBOOK_INTERCONNECTION_ENGINE_TITLE: widgetUtilityService.translate('playbookDebugger.PLAYBOOK_REFERENCE_VIEWER_LABEL'),
             SEARCH: widgetUtilityService.translate('playbookDebugger.SEARCH'),
-            SEARCH_IN_PLAYBOOK_TITLE: widgetUtilityService.translate('playbookDebugger.SEARCH_IN_PLAYBOOK')
+            SEARCH_WITHIN_PLAYBOOK_TITLE: widgetUtilityService.translate('playbookDebugger.SEARCH_WITHIN_PLAYBOOK'),
+            TOOLTIP_PLAYBOOK_REFERENCE_VIEWER: widgetUtilityService.translate('playbookDebugger.TOOLTIP_PLAYBOOK_REFERENCE_VIEWER'),
+            TOOLTIP_SEARCH: widgetUtilityService.translate('playbookDebugger.TOOLTIP_SEARCH')
           };
+        }).finally(function() {
+          init();
         });
       }
       else {
         $timeout(function () {
           cancel();
+          init();
         }, 100)
       }
     }
-    init();
+
+    _handleTranslations();
   }
 })();

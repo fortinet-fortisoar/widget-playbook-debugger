@@ -7,11 +7,11 @@
 (function () {
     angular
         .module('cybersponse')
-        .controller('editPlaybookDebugger100Ctrl', editPlaybookDebugger100Ctrl);
+        .controller('editPlaybookUtility100Ctrl', editPlaybookUtility100Ctrl);
 
-        editPlaybookDebugger100Ctrl.$inject = ['$scope', 'config', 'widgetUtilityService', '$uibModalInstance'];
+        editPlaybookUtility100Ctrl.$inject = ['$scope', 'config', 'widgetUtilityService', '$uibModalInstance'];
 
-    function editPlaybookDebugger100Ctrl($scope, config, widgetUtilityService, $uibModalInstance) {
+    function editPlaybookUtility100Ctrl($scope, config, widgetUtilityService, $uibModalInstance) {
         $scope.config = config;
         $scope.cancel = cancel;
 

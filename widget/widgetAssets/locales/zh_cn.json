@@ -3,8 +3,10 @@
         "BTN_CANCEL": "取消",
         "BTN_SAVE": "保存",
         "PLAYBOOK_DEBUGGER_EDIT_VIEW": "Playbook 调试器编辑视图",
-        "PLAYBOOK_INTERCONNECTION_ENGINE": "Playbook 互联引擎",
+        "PLAYBOOK_REFERENCE_VIEWER_LABEL": "Playbook 参考查看器",
         "SEARCH": "搜索",
-        "SEARCH_IN_PLAYBOOK": "在 Playbook 中搜索"
+        "SEARCH_WITHIN_PLAYBOOK": "在 Playbook 内搜索",
+        "TOOLTIP_PLAYBOOK_REFERENCE_VIEWER": "可视化当前 Playbook 与其引用的 Playbook 之间的关系。点击 Playbook 名称可导航到其详细信息。",
+        "TOOLTIP_SEARCH": "在当前打开的 Playbook 中查找包含您的搜索词的步骤。匹配的步骤将被高亮显示。"
     }
 }

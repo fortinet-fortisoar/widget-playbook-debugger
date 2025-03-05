@@ -6,7 +6,9 @@
     <!-- Search String in Playbook  -->
     <div ng-form name="searchInPlaybook" class="form-group padding-left-md padding-top-md">
       <div class="display-flex-space-between">
-        <label class="control-label">{{viewWidgetVars.SEARCH_IN_PLAYBOOK}}</label>
+        <label class="control-label">{{viewWidgetVars.SEARCH_WITHIN_PLAYBOOK_TITLE}}<span data-uib-tooltip="{{viewWidgetVars.TOOLTIP_SEARCH}}" data-tooltip-placement="bottom" class="margin-left-sm">
+          <i class="icon icon-information font-Size-13"></i>
+        </span></label>
       </div>
       <div class="input-group col-md-6 search-style margin-0 padding-0">
         <input type="text" class="form-control filter-height-style font-style-normal" data-ng-model="searchText" placeholder="{{ viewWidgetVars.SEARCH }}" aria-labelledby="search-btn" name="search-input">
@@ -21,7 +23,9 @@
     <div ng-form name="playbookInterconnection" class="form-group">
       <div class="display-flex-space-between padding-left-md">
         <div class="display-flex-space-between">
-          <label class="control-label">{{viewWidgetVars.PLAYBOOK_INTERCONNECTION_ENGINE_TITLE}}</label>
+          <label class="control-label">{{viewWidgetVars.PLAYBOOK_INTERCONNECTION_ENGINE_TITLE}}<span data-uib-tooltip="{{viewWidgetVars.TOOLTIP_PLAYBOOK_REFERENCE_VIEWER}}" class="margin-left-sm">
+            <i class="icon icon-information font-Size-13"></i>
+          </span></label>
         </div>
         <div>
           <span class="fa btn widget-action-icon icon icon-refresh btn-sm pull-right"

@@ -1,7 +1,7 @@
 {
-    "name": "playbookDebugger",
-    "title": "Playbook Debugger",
-    "subTitle": "Playbook Debugger",
+    "name": "playbookUtility",
+    "title": "Playbook Utility",
+    "subTitle": "Playbook Utility",
     "version": "1.0.0",
     "published_date": 1720413750,
     "metadata": {
@@ -10,7 +10,7 @@
         "certified": "No",
         "publisher": "Fortinet",
         "compatibility": [
-            "7.5.0"
+            "7.6.0"
         ],
         "standalone": true,
         "windowClass": "Full Width",
